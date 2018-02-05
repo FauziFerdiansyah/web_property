@@ -1,0 +1,62 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  color: #1a1a2a;
+}
+.navbar.nav-default{
+  background-color: #f5f5f5;
+  -webkit-transition: -webkit-transform 0.3s ease-out;
+  -webkit-transition: transform 0.3s ease-out;
+  transition: transform 0.3s ease-out;
+  box-shadow: 0 0 10px rgba(0,0,0,0.03);
+}
+.navbar.nav-default.scroll{
+  box-shadow:none;
+}
+.navbar{
+  font-family: 'Lato', sans-serif;
+}
+.navbar .navbar-item{
+  color: #949494;
+  font-size:12px;
+  letter-spacing: 1px;
+}
+.navbar .navbar-item.active{
+  color: #1a1a2a;
+  background-color: #fff;
+  box-shadow: 0 -10px 10px 0 rgba(0,0,0,0.1);
+}
+
+/* OWL */
+.owl-theme .owl-nav{
+  width: 100%;
+  position: absolute;
+  top: 40%;
+}
+.owl-theme .owl-nav .owl-prev{
+  position: absolute;
+  left: 10px;
+  border-radius: 50%;
+  padding: 5px 12px;
+  background-color: rgba(0,0,0,0.3);
+}
+.owl-theme .owl-nav .owl-next{
+  position: absolute;
+  right: 10px;
+  border-radius: 50%;
+  padding: 5px 12px;
+  background-color: rgba(0,0,0,0.3);
+}
+.owl-prev, .owl-next {opacity: 0 !important;transition: all 0.4s ease-in-out}
+.owl-theme:hover .owl-nav .owl-prev {opacity: 1 !important;}
+.owl-theme:hover .owl-nav .owl-next {opacity: 1 !important;}
+
+/* ================================================== Responsive ================================================== */
+/* < 1024 */
+@media screen and (max-width:1023px) {
+  .navbar .navbar-item.active{
+    color: #ffba4d;
+    box-shadow: none;
+  }
+}
