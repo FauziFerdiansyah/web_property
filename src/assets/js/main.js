@@ -8,7 +8,45 @@
 'use strict';
 document.addEventListener('DOMContentLoaded', function () {
 // BULMA JAVASCRIPT ###################################################################################################
-	
+	// Dropdowns
+
+  var $metalinks = getAll('#meta a');
+
+  if ($metalinks.length > 0) {
+    $metalinks.forEach(function ($el) {
+      $el.addEventListener('click', function (event) {
+        event.preventDefault();
+        var target = $el.getAttribute('href');
+        var $target = document.getElementById(target.substring(1));
+        $target.scrollIntoView(true);
+        // window.history.replaceState(null, document.title, `${window.location.origin}${window.location.pathname}${target}`);
+        return false;
+      });
+    });
+  }
+
+  // Dropdowns
+
+  var $dropdowns = getAll('.dropdown:not(.is-hoverable)');
+
+  if ($dropdowns.length > 0) {
+    $dropdowns.forEach(function ($el) {
+      $el.addEventListener('click', function (event) {
+        event.stopPropagation();
+        $el.classList.toggle('is-active');
+      });
+    });
+
+    document.addEventListener('click', function (event) {
+      closeDropdowns();
+    });
+  }
+
+  function closeDropdowns() {
+    $dropdowns.forEach(function ($el) {
+      $el.classList.remove('is-active');
+    });
+  }
 	// Toggles --------------------------------------------------------------------------------------------------------
 	var $burgers = getAll('.burger');
 
@@ -25,32 +63,97 @@ document.addEventListener('DOMContentLoaded', function () {
 	// # Toggle -------------------------------------------------------------------------------------------------------
 
 	// Scrolling ------------------------------------------------------------------------------------------------------
+	var navbarEl = document.getElementById("nav-main");
 	var navbar_main = document.getElementById("nav-main");
 	var offsetHeight = navbar_main.offsetHeight;
+	var NAVBAR_HEIGHT = offsetHeight;
+	var THRESHOLD = 160;
+  var navbarOpen = false;
+  var horizon = NAVBAR_HEIGHT;
+  var whereYouStoppedScrolling = 0;
+  var scrollFactor = 0;
+  var currentTranslate = 0;
 
-	var scrollableElement = document.getElementById('root');
-	scrollableElement.addEventListener('wheel', findScrollDirectionOtherBrowsers);
-	
-	function findScrollDirectionOtherBrowsers(event){
-		var delta;
-		var menuMain = document.getElementById("menuMain");
-	
-		if (event.wheelDelta){
-			delta = event.wheelDelta;
-		}else{
-			delta = -1 *event.deltaY;
-		}
-		if(!hasClass(menuMain, 'is-active') === true){
-			if (delta < 0){
-				navbar_main.style.transform = "translateY(-"+offsetHeight+"px)";
-				navbar_main.classList.add("scroll");
-			}else if (delta > 0){
-				navbar_main.style.transform = "translateY(0px)";
-				navbar_main.classList.remove("scroll");
-			}
-		}
-		
-	}
+	function upOrDown(lastY, currentY) {
+    if (currentY >= lastY) {
+      return goingDown(currentY);
+    }
+    return goingUp(currentY);
+  }
+
+  function goingDown(currentY) {
+    var trigger = NAVBAR_HEIGHT;
+    whereYouStoppedScrolling = currentY;
+
+    if (currentY > horizon) {
+      horizon = currentY;
+    }
+
+    translateHeader(currentY, false);
+  }
+
+  function goingUp(currentY) {
+    var trigger = 0;
+
+    if (currentY < whereYouStoppedScrolling - NAVBAR_HEIGHT) {
+      horizon = currentY + NAVBAR_HEIGHT;
+    }
+
+    translateHeader(currentY, true);
+  }
+
+  function constrainDelta(delta) {
+    return Math.max(0, Math.min(delta, NAVBAR_HEIGHT));
+  }
+
+  function translateHeader(currentY, upwards) {
+    // let topTranslateValue;
+    var translateValue = void 0;
+
+    if (upwards && currentTranslate == 0) {
+      translateValue = 0;
+    } else if (currentY <= NAVBAR_HEIGHT) {
+      translateValue = currentY * -1;
+    } else {
+      var delta = constrainDelta(Math.abs(currentY - horizon));
+      translateValue = delta - NAVBAR_HEIGHT;
+    }
+
+    if (translateValue != currentTranslate) {
+      var navbarStyle = '\n        transform: translateY(' + translateValue + 'px);\n      ';
+      currentTranslate = translateValue;
+      navbarEl.setAttribute('style', navbarStyle);
+    }
+
+    if (currentY > THRESHOLD * 2) {
+      scrollFactor = 1;
+    } else if (currentY > THRESHOLD) {
+      scrollFactor = (currentY - THRESHOLD) / THRESHOLD;
+    } else {
+      scrollFactor = 0;
+    }
+
+    var translateFactor = 1 + translateValue / NAVBAR_HEIGHT;
+  }
+
+  translateHeader(window.scrollY, false);
+
+  var ticking = false;
+  var lastY = 0;
+
+  window.addEventListener('scroll', function () {
+    var currentY = window.scrollY;
+
+    if (!ticking) {
+      window.requestAnimationFrame(function () {
+        upOrDown(lastY, currentY);
+        ticking = false;
+        lastY = currentY;
+      });
+    }
+
+    ticking = true;
+  });
 	// # Scrolling ----------------------------------------------------------------------------------------------------
 	  
 	// Modals ---------------------------------------------------------------------------------------------------------
@@ -69,31 +172,55 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	  });
 	}
-	
-	if ($modalCloses.length > 0) {
-	  $modalCloses.forEach(function ($el) {
-		$el.addEventListener('click', function () {
-		  closeModals();
-		});
-	  });
-	}
-	// # Modals -------------------------------------------------------------------------------------------------------
-
-	// ALL FUNCTION ---------------------------------------------------------------------------------------------------
-	function getAll(selector) {
-		return Array.prototype.slice.call(document.querySelectorAll(selector), 0);
-	}
 	function closeModals() {
 		rootEl.classList.remove('is-clipped');
 		$modals.forEach(function ($el) {
 			$el.classList.remove('is-active');
 		});
 	}
-	// function for HAS CLASS
-	function hasClass(element, cls) {
-			return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
+	if ($modalCloses.length > 0) {
+	  $modalCloses.forEach(function ($el) {
+			$el.addEventListener('click', function () {
+				closeModals();
+			});
+	  });
 	}
-	// # ALL FUNCTION -------------------------------------------------------------------------------------------------
-	
+	// # Modals -------------------------------------------------------------------------------------------------------
+
 // # BULMA JAVASCRIPT #################################################################################################
+
+	// Function for show hide option detail
+	document.getElementsByClassName("div-btn")[0].addEventListener("click", displayDetail);
+		function displayDetail() {
+			var myButtonClasses = document.getElementById("openDetail").classList;
+			myButtonClasses.remove("is-active");
+			if (myButtonClasses.contains("closed-detail")) {
+				myButtonClasses.remove("closed-detail");
+			} else {
+				myButtonClasses.add("closed-detail");
+			}
+			if (myButtonClasses.contains("open-detail")) {
+				myButtonClasses.remove("open-detail");
+			} else {
+				myButtonClasses.add("open-detail");
+			}
+		}
+
+	document.getElementsByClassName("cls-dropdown-detail")[0].addEventListener("click", closeDetail);
+		function closeDetail() {
+			var myButtonClasses2 = document.getElementById("openDetail").classList;
+				myButtonClasses2.remove("open-detail");
+				document.getElementById("openDetail").setAttribute("class","dropdown-cst closed-detail");
+		}
+		
 }); 
+
+// ALL FUNCTION Global ----------------------------------------------------------------------------------------------
+function getAll(selector) {
+	return Array.prototype.slice.call(document.querySelectorAll(selector), 0);
+}
+// function for HAS CLASS
+function hasClass(element, cls) {
+		return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
+}
+// # ALL FUNCTION -------------------------------------------------------------------------------------------------
