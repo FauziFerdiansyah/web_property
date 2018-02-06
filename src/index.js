@@ -13,6 +13,9 @@ import 'bulma/css/bulma.css';
 // INDEX CSS 
 import './index.css';
 
+// IMPORT SPACING HELPER
+import './assets/css/spacing-helper.css';
+
 // REDIRECT WITHOUT LOADING
 import { BrowserRouter } from 'react-router-dom';
 
