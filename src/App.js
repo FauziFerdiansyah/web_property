@@ -5,6 +5,8 @@ import OwlCarousel from 'react-owl-carousel';
 import Navbar from './elements/Navbar';
 import SliderBanner from './elements/slider-header-top';
 import FormSearchBanner from './elements/form-search-header-top';
+import RecomendationBox from './elements/recomendation-content-box';
+import Footer from './elements/Footer';
 
 class App extends Component {
   render() {
@@ -12,19 +14,29 @@ class App extends Component {
       <div className="App">
         {/* Navbar # Element */}
         <Navbar />
+
         {/* Content Header Top */}
-        <section className="section sct">
-          <div className="container">
-            <div className="columns">
-              <div className="column is-6">
-              <SliderBanner />
-              </div>
-              <div className="column is-6">
-              <FormSearchBanner />
+        <div className="mb50">
+          <section className="section sct bgimg-1">
+            <div className="container">
+              <div className="columns">
+                <div className="column is-6">
+                {/* Slider Banner # Element */}
+                <SliderBanner />
+                </div>
+                <div className="column is-6">
+                {/* Form Search Banner # Element */}
+                <FormSearchBanner />
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+
+        {/* Content Recommendation # Element */}
+        <RecomendationBox />
+        </div>
+        {/* Footer # Element */}
+        <Footer />
       </div>
     );
   }
