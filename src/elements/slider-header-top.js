@@ -7,26 +7,26 @@ class SliderBanner extends Component {
   
 	  this.state = {
 		  options: {
-			  loop: true,
-			  navText: false,
-			  navText:['<i class="ion-chevron-left"></i>','<i class="ion-chevron-right"></i>'],
-			  margin:10,
-			  nav:true,
-			  dots:false,
-			  autoplay:true,
-			  autoplayTimeout:1000,
-			  center: true,
-			  responsive:{
-				  0:{
-					  items:1
-				  },
-				  769:{
-					  items:1
-				  },
-				  1024:{
-					  items:1
-				  }
-			  }
+			loop: true,
+			navText: false,
+			navText:['<i class="ion-chevron-left"></i>','<i class="ion-chevron-right"></i>'],
+			margin:10,
+			nav:true,
+			dots:false,
+			autoplay:true,
+			autoplayTimeout:3000,
+			center: true,
+			responsive:{
+				0:{
+					items:1
+				},
+				769:{
+					items:1
+				},
+				1024:{
+					items:1
+				}
+			}
 		  },
 		  items: [
 			  <div className="item" key={1}>
@@ -55,7 +55,7 @@ class SliderBanner extends Component {
 		return (
 			<OwlCarousel
 				ref={inst => this.slider = inst}
-				className="owl-theme"
+				className="owl-theme slide-banner"
 				{...this.state.options}
 			>
 				{this.state.items}
