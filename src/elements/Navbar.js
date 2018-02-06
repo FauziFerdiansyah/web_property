@@ -24,6 +24,30 @@ class Navbar extends Component {
 								HOME
 							</NavLink>
 						</div>
+						<div className="navbar-end">
+							<div className="navbar-item">
+								<div className="field is-grouped">
+								<p className="control">
+									<a className="button is-light" href="#.">
+									<span className="icon">
+										<i className="icon ion-images"></i>
+									</span>
+									<span>
+										Pasang Iklan
+									</span>
+									</a>
+								</p>
+								<p className="control">
+									<a className="button is-def is-outlined" href="#.">
+									<span className="icon">
+										<i className="icon ion-person"></i>
+									</span>
+									<span>Akun</span>
+									</a>
+								</p>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</nav>
