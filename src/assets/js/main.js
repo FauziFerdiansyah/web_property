@@ -119,11 +119,14 @@ document.addEventListener('DOMContentLoaded', function () {
       translateValue = delta - NAVBAR_HEIGHT;
     }
 
-    if (translateValue != currentTranslate) {
-      var navbarStyle = '\n        transform: translateY(' + translateValue + 'px);\n      ';
-      currentTranslate = translateValue;
-      navbarEl.setAttribute('style', navbarStyle);
-    }
+		if(!document.getElementById("menuMain").classList.contains("is-active")){
+			if (translateValue != currentTranslate) {
+				var navbarStyle = '\n        transform: translateY(' + translateValue + 'px);\n      ';
+				currentTranslate = translateValue;
+				navbarEl.setAttribute('style', navbarStyle);
+			}
+		}
+    
 
     if (currentY > THRESHOLD * 2) {
       scrollFactor = 1;
@@ -212,15 +215,37 @@ document.addEventListener('DOMContentLoaded', function () {
 				myButtonClasses2.remove("open-detail");
 				document.getElementById("openDetail").setAttribute("class","dropdown-cst closed-detail");
 		}
+	
+	// document.getElementById("toTop").addEventListener("click", scrollToTop);
+	document.getElementsByClassName("ft-b-to-top")[0].addEventListener("click", scrollToTop);
+
+	// function scrollToTop() {
+	// 	var scrollDuration = 100;
+	// 	const   scrollHeight = window.scrollY,
+	// 					scrollStep = Math.PI / ( scrollDuration / 15 ),
+	// 					cosParameter = scrollHeight / 2;
+	// 	var     scrollCount = 0,
+	// 					scrollMargin,
+	// 					scrollInterval = setInterval( function() {
+	// 							if ( window.scrollY != 0 ) {
+	// 									scrollCount = scrollCount + 1;  
+	// 									scrollMargin = cosParameter - cosParameter * Math.cos( scrollCount * scrollStep );
+	// 									window.scrollTo( 0, ( scrollHeight - scrollMargin ) );
+	// 							} 
+	// 							else clearInterval(scrollInterval); 
+	// 					}, 15 );
+	// 	}
+	function scrollToTop() {
+			if (document.body.scrollTop !== 0 || document.documentElement.scrollTop !== 0) {
+					window.scrollBy(0, -50);
+					requestAnimationFrame(scrollToTop);
+			}
+	}
 		
 }); 
 
 // ALL FUNCTION Global ----------------------------------------------------------------------------------------------
 function getAll(selector) {
 	return Array.prototype.slice.call(document.querySelectorAll(selector), 0);
-}
-// function for HAS CLASS
-function hasClass(element, cls) {
-		return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
 }
 // # ALL FUNCTION -------------------------------------------------------------------------------------------------
