@@ -19,6 +19,10 @@ import './assets/css/spacing-helper.css';
 // REDIRECT WITHOUT LOADING
 import { BrowserRouter } from 'react-router-dom';
 
+//LAZYLOAD
+import { initSimpleImg } from 'react-simple-img';
+initSimpleImg();
+
 ReactDOM.render((
     <BrowserRouter>
       <App />
