@@ -16,7 +16,7 @@ class App extends Component {
         <Navbar />
 
         {/* Content Header Top */}
-        <div className="mb50">
+        <div className="mb30 wrapper-content">
           <section className="section sct bgimg-1">
             <div className="container">
               <div className="columns">
@@ -34,6 +34,14 @@ class App extends Component {
 
         {/* Content Recommendation # Element */}
         <RecomendationBox />
+        <section className="section sct bg2 mt30 p0">
+          <div className="container sct-content-hover">
+            <h5 className="title is-5 sct-title-hover">Kami membantu orang dan rumah untuk menemukan satu sama lain</h5>
+            <a href="#." className="sct-subtitle-hover">
+              <h5 className="subtitle is-5">Cari Properti <i className="icon ion-arrow-right-c"></i></h5>
+            </a>
+          </div>
+        </section>
         </div>
         {/* Footer # Element */}
         <Footer />
