@@ -216,25 +216,8 @@ document.addEventListener('DOMContentLoaded', function () {
 				document.getElementById("openDetail").setAttribute("class","dropdown-cst closed-detail");
 		}
 	
-	// document.getElementById("toTop").addEventListener("click", scrollToTop);
-	document.getElementsByClassName("ft-b-to-top")[0].addEventListener("click", scrollToTop);
+	document.getElementById("toTop").addEventListener("click", scrollToTop);
 
-	// function scrollToTop() {
-	// 	var scrollDuration = 100;
-	// 	const   scrollHeight = window.scrollY,
-	// 					scrollStep = Math.PI / ( scrollDuration / 15 ),
-	// 					cosParameter = scrollHeight / 2;
-	// 	var     scrollCount = 0,
-	// 					scrollMargin,
-	// 					scrollInterval = setInterval( function() {
-	// 							if ( window.scrollY != 0 ) {
-	// 									scrollCount = scrollCount + 1;  
-	// 									scrollMargin = cosParameter - cosParameter * Math.cos( scrollCount * scrollStep );
-	// 									window.scrollTo( 0, ( scrollHeight - scrollMargin ) );
-	// 							} 
-	// 							else clearInterval(scrollInterval); 
-	// 					}, 15 );
-	// 	}
 	function scrollToTop() {
 			if (document.body.scrollTop !== 0 || document.documentElement.scrollTop !== 0) {
 					window.scrollBy(0, -50);
